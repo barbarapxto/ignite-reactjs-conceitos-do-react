@@ -15,6 +15,7 @@ export function TaskList() {
     const [newTaskTitle, setNewTaskTitle] = useState('');
 
     function handleCreateNewTask() {
+        if (newTaskTitle.trim() === '') return;
         const newTask = {
             id: tasks.length + 1,
             title: newTaskTitle,
@@ -26,7 +27,19 @@ export function TaskList() {
     }
 
     function handleToggleTaskCompletion(id: number) {
-        // Altere entre `true` ou `false` o campo `isComplete` de uma task com dado ID
+        const taskList = tasks.map((task) => {
+            return task.id === id
+                ? {
+                      id: task.id,
+                      title: task.title,
+                      isComplete: !task.isComplete,
+                  }
+                : task;
+        });
+
+        console.log(taskList);
+
+        setTasks(taskList);
     }
 
     function handleRemoveTask(id: number) {
